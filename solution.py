@@ -1,3 +1,5 @@
+import json
+
 products_file = open("products.txt", "r+")
 listings_file = open("listings.txt", "r+")
 
@@ -11,7 +13,7 @@ products_file.close()
 for listing_line in listings_file:
     listings.append(dict(eval(listing_line)))
 listings_file.close()
-    
+
 result = []
 
 for product in products:
@@ -23,8 +25,8 @@ for product in products:
             or product["product_name"] in listing["title"]:
                     res["listings"].append(listing)
     result.append(res)
-res_file = open("results.txt", "w")
-for prod in result:
-    res_file.write(str(prod)+"\n")
-    
+with open("results.txt","w") as res_file:
+    for prod in result:
+        res_file.write((json.dumps(prod,separators=(',',':')))+"\n")
+
 res_file.close()
